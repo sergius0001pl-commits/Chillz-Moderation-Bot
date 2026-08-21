@@ -1,14 +1,15 @@
-import { SlashCommandBuilder, MessageFlags } from 'discord.js';
+import { SlashCommandBuilder, MessageFlags, PermissionFlagsBits } from 'discord.js';
 import { infoEmbed, successEmbed } from '../../utils/embeds.js';
 import { replyUserError, ErrorTypes } from '../../utils/errorHandler.js';
 import { verifyUser } from '../../services/verificationService.js';
 import { InteractionHelper } from '../../utils/interactionHelper.js';
 
 export default {
-    data: new SlashCommandBuilder()
-        .setName('verify')
-        .setDescription('Verify yourself and gain access to the server'),
-
+data: new SlashCommandBuilder()
+    .setName('verify')
+    .setDescription('Verify yourself and gain access to the server')
+    .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild),
+    
     async execute(interaction, config, client) {
         const guild = interaction.guild;
 
