@@ -10,10 +10,10 @@ import { getWelcomeConfig } from '../../utils/database.js';
 import verificationDashboard from './modules/verification_dashboard.js';
 
 export default {
-    data: new SlashCommandBuilder()
-        .setName("verification")
-        .setDescription("Manage the server verification system")
-        .addSubcommand(subcommand =>
+13 data: new SlashCommandBuilder()
+14     .setName("verification")
+15     .setDescription("Manage the server verification system")
+16     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
             subcommand
                 .setName("setup")
                 .setDescription("Set up the verification system")
