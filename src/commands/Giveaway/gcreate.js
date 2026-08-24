@@ -217,7 +217,7 @@ export default {
             embeds: [
                 successEmbed(
                     `Giveaway Started! 🎉`,
-                    `A new giveaway for **${prizeName}** has been started in ${targetChannel} and will end in **${durationString} the winner will be **${selectedWinner}`**.` +
+                    `A new giveaway for **${prizeName}** has been started in ${targetChannel} and will end in **${durationString}` +
                     (
                         selectedWinner
                             ? `\n\n🏆 Selected winner: ${selectedWinner}`
