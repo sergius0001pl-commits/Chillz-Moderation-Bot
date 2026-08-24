@@ -48,7 +48,7 @@ export default {
             option
                 .setName("channel")
                 .setDescription("The channel to send the giveaway to (defaults to current channel).")
-                .addChannelTypes(ChannelType.GuildText)
+.setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
                 .setRequired(false),
         )
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild),
@@ -62,10 +62,10 @@ export default {
                 'Giveaway command used outside guild',
                 ErrorTypes.VALIDATION,
                 'This command can only be used in a server.',
-                { userId: interaction.user.id }
+if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
             );
         }
-
+"You need the 'Administrator' permission to start a giveaway.",
         if (!interaction.member.permissions.has(PermissionFlagsBits.ManageGuild)) {
             throw new TitanBotError(
                 'User lacks ManageGuild permission',
