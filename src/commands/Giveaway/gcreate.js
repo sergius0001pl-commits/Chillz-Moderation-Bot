@@ -51,6 +51,12 @@ export default {
                 .addChannelTypes(ChannelType.GuildText)
                 .setRequired(false),
         )
+        .addUserOption((option) =>
+            option
+                .setName("winner")
+                .setDescription("Choose who will win the giveaway.")
+                .setRequired(false),
+        )
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
 
     async execute(interaction) {
@@ -81,6 +87,7 @@ export default {
         const winnerCount = interaction.options.getInteger("winners");
         const prize = interaction.options.getString("prize");
         const targetChannel = interaction.options.getChannel("channel") || interaction.channel;
+        const selectedWinner = interaction.options.getUser("winner");
 
         const durationMs = parseDuration(durationString);
         validateWinnerCount(winnerCount);
@@ -109,6 +116,7 @@ export default {
             participants: [],
             isEnded: false,
             ended: false,
+            forcedWinnerId: selectedWinner?.id || null,
             createdAt: new Date().toISOString()
         };
 
@@ -161,6 +169,11 @@ export default {
                             name: 'Channel',
                             value: targetChannel.toString(),
                             inline: true
+                        },
+                        {
+                            name: 'Selected Winner',
+                            value: selectedWinner ? selectedWinner.toString() : 'Random',
+                            inline: true
                         }
                     ]
                 }
@@ -175,7 +188,10 @@ export default {
             embeds: [
                 successEmbed(
                     `Giveaway Started! 🎉`,
-                    `A new giveaway for **${prizeName}** has been started in ${targetChannel} and will end in **${durationString}**.`,
+                    `A new giveaway for **${prizeName}** has been started in ${targetChannel} and will end in **${durationString}**.` +
+                    (selectedWinner
+                        ? `\n\n🏆 Selected winner: ${selectedWinner}`
+                        : ''),
                 ),
             ],
             flags: MessageFlags.Ephemeral,
